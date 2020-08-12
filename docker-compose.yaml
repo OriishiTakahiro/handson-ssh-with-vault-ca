@@ -1,0 +1,44 @@
+version: '3'
+services:
+
+  # Vaultのサーバ
+  vault:
+    image: vault:1.5.0
+    environment:
+      - VAULT_ADDR=http://127.0.0.1:8200
+    cap_add:
+      - IPC_LOCK
+    command: "vault server -config=/vault/config/config.hcl"
+    ports:
+      - 8200:8200
+      - 8125:8125
+    volumes:
+      - ./vault/file:/vault/file
+      - ./vault/config.hcl:/vault/config/config.hcl
+
+  # 踏み台サーバ (本番だと各ユーザのPC群)
+  bastion1:
+    build:
+      context: ./bastion
+    environment:
+      - VAULT_ADDR=http://vault:8200
+    cap_add:
+      - IPC_LOCK
+
+  # SSHしたいサーバ群
+  target1:
+    build: ./target
+    environment:
+      - VAULT_ADDR=http://vault:8200
+    ports:
+      - 8081:80
+    cap_add:
+      - IPC_LOCK
+  target2:
+    build: ./target
+    environment:
+      - VAULT_ADDR=http://vault:8200
+    ports:
+      - 8082:80
+    cap_add:
+      - IPC_LOCK
