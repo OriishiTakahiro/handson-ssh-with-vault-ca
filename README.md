@@ -57,9 +57,6 @@ $ docker-compose up -d
 
 "Username & Password" を選択してください。
 
-> 以降ユーザ名を "oriishi" として進めていきます。
-> コマンドなどは適宜読み替えてください。
-
 ![](./docs/img/select_auth_type.png)
 
 オプションなどは特に指定しなくても大丈夫です。
@@ -67,6 +64,10 @@ $ docker-compose up -d
 完了後 "Access" -> "Auth Methods" -> "userpass" が追加されます。
 
 ここで "Create user" へ進みましょう。
+
+> ここで作るユーザはユーザ名 "oriishi" として進めていきます。
+> コマンドなどは適宜読み替えてください。
+
 
 ![](./docs/img/create_user.png)
 
@@ -113,7 +114,7 @@ handsonグループを作成していきます、パラメタは以下を指定�
 - Policies: handson, default
 - Member Entity IDs: 先ほど確認したユーザのEntity
 
-EntityやGroupの詳細は[Group-Entity-Aliasの関係](https://learn.hashicorp.com/tutorials/vault/pki-engine)を確認してください。
+EntityやGroupの詳細は[Group-Entity-Aliasの関係](https://learn.hashicorp.com/tutorials/vault/identity)を確認してください。
 
 ### VaultのCAセットアップ
 
