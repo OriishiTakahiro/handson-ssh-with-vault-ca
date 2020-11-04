@@ -184,7 +184,7 @@ $ vault write handson/sign/oriishi public_key=@$HOME/.ssh/id_rsa.pub -<<"EOH"
   }
 }
 EOH
-# 署名付き鍵を取得 (秘密鍵-cert.pubの名前にしないと、sshコマンドで -i で秘密鍵と証明書つき)
+# 署名付き鍵を取得 (秘密鍵-cert.pubの名前にしないと、sshコマンドで -i で秘密鍵と署名付き公開鍵両方を指定しないといけない)
 $ vault write -field=signed_key handson/sign/oriishi public_key=@$HOME/.ssh/id_rsa.pub > $HOME/.ssh/id_rsa-cert.pub
 # 署名付き公開鍵の詳細を確認
 $ ssh-keygen -Lf ~/.ssh/id_rsa-cert.pub
