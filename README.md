@@ -18,6 +18,13 @@ $ docker-compose up -d
 
 ここで <http://localhost:8081> へアクセスして "Wecome to nginx!" が表示されることを確認しましょう。
 
+`docker-compose` で起動したコンテナには以下のものがあります。
+
+- vault: CA局としても利用するvaultサーバが動作
+- bastion1: 踏み台サーバで、ユーザはここから `target1` や `target2` へログインを実行
+- target1: SSH先のサーバで、sshdとNginxが動作
+- target2: SSH先のサーバで、sshdとNginxが動作
+
 ### Vaultの起動
 
 次にVaultを使用するためのアカウント作成を行います。
