@@ -131,6 +131,24 @@ $ docker-compose exec vault sh
 # rootトークンでログイン
 $ vault login
 > Token (will be hidden):
+```
+
+vaultでは `write` コマンドを使ってシークレット情報を書き込み、`read` コマンドを使ってシークレット情報を読み込めます。
+
+試しに `cubbyhole` (デフォルトで用意されているユーザローカルの暗号化KVS) にそれっぽい情報を書き込んでみましょう。
+
+```sh
+$ vault write cubbyhole/stg/server-1 - <<"EOH"
+{ "ip": "xx.xx.xx.xx", "user": "me", "pass": "happy_vault" }
+EOH
+$ vault read cubbyhole/stg/server-1 -format=json
+```
+
+ここでRootでログインしたWeb GUIからも保存したシークレット情報の確認が可能なはずです。
+
+ではCAが利用する署名鍵を作成して登録します。
+
+```sh
 $ vault write handson/config/ca generate_signing_key=true
 $ exit
 ```
@@ -196,10 +214,7 @@ $ ssh-keygen -Lf ~/.ssh/id_rsa-cert.pub
 # 
 $ ssh -i ~/.ssh/id_rsa root@target1
 ```
-> 本当は `ssh -i ~/.ssh/id_rsa-cert.pub -i ~/.ssh/id_rsa root@target1` のように証明書と秘密鍵を両方指定しないといけないのですが、OpenSSHの仕様として`<秘密鍵>-cert.pub`の名称の証明書があれば、自動で使ってくれるので便利です。
-
-Tips
-> 
+> `ssh -i ~/.ssh/id_rsa-cert.pub -i ~/.ssh/id_rsa root@target1` のように証明書と秘密鍵を両方指定しないといけないのですが、OpenSSHの仕様として`<秘密鍵>-cert.pub`の名称の証明書があれば、自動で使ってくれるので便利です。
 
 ### ターゲットの表示変更
 
