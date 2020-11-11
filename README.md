@@ -10,6 +10,8 @@
 
 まずdocker-composeで一通りのシステムを動作させます。
 
+> 以前に実施したことのある方は `rm -rf ./vault/file` を実行して、vaultに保存されたファイルを削除してから臨みましょう。
+
 ```sh
 $ docker-compose up -d
 ```
